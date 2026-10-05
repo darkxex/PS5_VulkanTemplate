@@ -230,7 +230,8 @@ printf 'PS5_HOST=<the console'"'"'s address>\n' >> ../PS5_Vulkan/.env
 
 The bootstrap builds RADV once (a long build), PS5_Vulkan's native tool and
 `libc.prx`, the console's control payload, installs the pinned payload SDK and
-fetches glm. It never touches the console.
+fetches glm. It never touches the console. On Ubuntu, RADV's build needs packages
+the check does not name: [`ps5/UBUNTU.md`](ps5/UBUNTU.md).
 
 **The console** needs a homebrew environment of its own (this repository does not
 set one up): an enabler such as [etaHEN](https://github.com/etaHEN/etaHEN),
