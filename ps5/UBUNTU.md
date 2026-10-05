@@ -3,6 +3,17 @@
 What a fresh Ubuntu 26.04 PC needed before `ps5/tools/bootstrap.sh` and
 `ps5/tools/build.sh` went through, beyond what the bootstrap's check names.
 
+## In one command
+
+Everything the bootstrap's check does not name, for the LLVM version installed
+(install `llvm` first, below, if `llvm-config` is missing):
+
+```bash
+v=$(llvm-config --version | cut -d. -f1) && sudo apt install libllvmspirvlib-$v-dev llvm-spirv-$v libclc-$v-dev libclang-$v-dev libclang-cpp$v-dev spirv-tools-dev
+```
+
+The sections below say why each is needed.
+
 ## What the check names
 
 `ps5/tools/bootstrap.sh --check` reported these missing, and they install from
