@@ -21,6 +21,7 @@ Copyright (C) 2026 Mihawk
 SPDX-License-Identifier: MIT
 """
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -117,8 +118,12 @@ def main():
 
     # The UI kit, in a title that has the module
     if (PS5 / "ui/setup-kit.sh").exists():
-        kit = Path(ROOT.parent / "PS5_VKHomebrewUI")
         kit_rev = pinned("ui/setup-kit.sh", "revision")
+        # Where setup-kit.sh found the pin: the sibling checkout, or its own bare clone
+        kit = Path(os.environ.get("PS5_VKHOMEBREWUI", ROOT.parent / "PS5_VKHomebrewUI"))
+        if subprocess.run(["git", "-C", str(kit), "cat-file", "-e", f"{kit_rev}^{{commit}}"],
+                          capture_output=True).returncode != 0:
+            kit = ROOT / ".deps/PS5_VKHomebrewUI.git"
         write_text(out / "ui-kit/LICENSE", kit, kit_rev, "LICENSE")
         parts.append(dict(
             id="ui-kit", name="the UI kit: BlackBearReloaded's ps5-homebrew-ui with my Vulkan backend (PS5_VKHomebrewUI), "

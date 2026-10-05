@@ -17,6 +17,9 @@
 
 set -euo pipefail
 [[ -n ${LINK_TRACE:-} ]] && set -x
+# sort and comm must agree on one collation: under a locale such as es_ES.UTF-8
+# comm reports the symbol lists unsorted and the link stops with no message.
+export LC_ALL=C
 
 work=$1 vulkan=$2 sdk=$3
 shift 3
